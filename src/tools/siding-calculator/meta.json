@@ -1,0 +1,37 @@
+{
+  "tool": "siding",
+  "category": "structure",
+  "short": "Siding calculator",
+  "what": "Squares of vinyl or fiber cement siding, with trim and house wrap",
+  "title": "Siding Calculator: Vinyl and Fiber Cement Squares | Calcupine",
+  "description": "Free siding calculator: squares and cartons of vinyl siding or HardiePlank fiber cement planks for your walls and gables, plus starter, J-channel, corners and wrap.",
+  "h1": "Siding calculator",
+  "lede": "Enter the distance around your house, the wall height and your gables. Get the cartons of vinyl or the fiber cement planks to buy, with starter strip, J-channel, corner posts and house wrap.",
+  "related": [
+    "roofing-calculator",
+    "brick-calculator",
+    "paint-calculator"
+  ],
+  "faq": [
+    {
+      "q": "What is a square of siding?",
+      "a": "100 square feet of wall. Vinyl siding is usually sold in cartons of 2 squares, which is 200 sq ft."
+    },
+    {
+      "q": "Do you subtract windows and doors when measuring for siding?",
+      "a": "No. CertainTeed's estimating form leaves doors and windows in, because the offcuts around them are wasted anyway. Only large openings such as garage doors and sliding doors come off, and only half their area."
+    },
+    {
+      "q": "How much extra siding should I buy?",
+      "a": "Add 10% for cuts and waste, as CertainTeed and the Journal of Light Construction both recommend. Add 1 ft to the height of each gable as well, for the angled cuts."
+    },
+    {
+      "q": "How many HardiePlank boards are in a square?",
+      "a": "It depends on the exposure. James Hardie lists 14.3 planks per square for 8 1/4 in planks at a 7 in exposure, 16.7 for 7 1/4 in planks at 6 in and 20 for 6 1/4 in planks at 5 in. All are 12 ft long."
+    },
+    {
+      "q": "How do I measure the gables?",
+      "a": "Measure the width of the gable at its base and the height from the base to the peak. Its area is half the width times the height plus 1 ft, which the calculator works out for you."
+    }
+  ]
+}

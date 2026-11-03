@@ -20,3 +20,6 @@
 [data-accent="driveway"] { --accent: #57534e; --accent-2: #d6a35c; --accent-deep: #292524; --accent-soft: #f1eee9; }
 [data-accent="retaining"] { --accent: #7c6a4f; --accent-2: #a3b86c; --accent-deep: #4a3f2e; --accent-soft: #f2eee4; }
 [data-accent="brick"] { --accent: #c2410c; --accent-2: #f59e0b; --accent-deep: #7c2d12; --accent-soft: #fdeee4; }
+[data-accent="siding"] { --accent: #2f6f9f; --accent-2: #7cc4e4; --accent-deep: #1d4a6b; --accent-soft: #e4f1f9; }
+[data-accent="carpet"] { --accent: #8b4fc4; --accent-2: #e58fb8; --accent-deep: #5b2d86; --accent-soft: #f3e9fb; }
+[data-accent="countertop"] { --accent: #57534e; --accent-2: #c9a77c; --accent-deep: #292524; --accent-soft: #f3f1ee; }

@@ -18,8 +18,10 @@
     "baseboard-calculator",
     "brick-calculator",
     "flooring-calculator",
+    "carpet-calculator",
     "tile-calculator",
     "grout-calculator",
+    "countertop-calculator",
     "square-footage-calculator",
     "concrete-calculator",
     "paver-calculator",
@@ -31,6 +33,7 @@
     "fence-calculator",
     "deck-calculator",
     "roofing-calculator",
+    "siding-calculator",
     "stairs-calculator"
   ],
   "pages": [
@@ -82,9 +85,9 @@
     "floors": {
       "slug": "floor-calculators",
       "h1": "Floor calculators",
-      "title": "Floor Calculators: Flooring, Tile, Grout, Square Footage",
-      "description": "Free floor calculators: boxes of flooring with waste, tiles with thinset, bags of grout for any joint size, and square footage for odd-shaped rooms.",
-      "intro": "Measure once and get the square footage, the number of boxes or tiles and the extras you need for a floor. The calculators handle L-shaped rooms and cut-outs, add extra waste for diagonal and herringbone tile layouts, and round up to full boxes after the waste is added. The grout calculator turns your tile size, joint width and tile thickness into pounds and bags of sanded or non-sanded grout, or pails of pre-mixed."
+      "title": "Floor Calculators: Flooring, Carpet, Tile, Countertops",
+      "description": "Free floor calculators: boxes of flooring, carpet off the roll with pad, tiles with thinset, bags of grout, countertop slabs and square footage.",
+      "intro": "Measure once and get the square footage, the number of boxes or tiles and the extras you need for a floor. The calculators handle L-shaped rooms and cut-outs, add extra waste for diagonal and herringbone tile layouts, and round up to full boxes after the waste is added. The grout calculator turns your tile size, joint width and tile thickness into pounds and bags of sanded or non-sanded grout, or pails of pre-mixed. The carpet calculator cuts your room from a 12, 13 1/2 or 15 ft roll the way installers do, with seams, pad and tack strip, and the countertop calculator gives the square feet of counters, island and backsplash with the quartz or granite slabs, or the laminate and butcher block lengths, to buy."
     },
     "concrete": {
       "slug": "concrete-and-paver-calculators",
@@ -102,10 +105,10 @@
     },
     "structure": {
       "slug": "roof-and-stair-calculators",
-      "h1": "Roof and stair calculators",
-      "title": "Roof and Stair Calculators: Shingles and Stair Layout",
-      "description": "Free roof and stair calculators: bundles of shingles, underlayment and drip edge from your house size and pitch, and stair risers, treads and stringers.",
-      "intro": "Get roofing squares and bundles of shingles from the outside size of your house, the overhang and the roof pitch, and lay out stairs with the number of risers, tread depth and stringer length, checked against common building code limits."
+      "h1": "Roof, siding and stair calculators",
+      "title": "Roof, Siding and Stair Calculators: Shingles, Siding",
+      "description": "Free roof, siding and stair calculators: bundles of shingles from your house size and pitch, vinyl or fiber cement siding and trim, and stair stringers.",
+      "intro": "Get roofing squares and bundles of shingles from the outside size of your house, the overhang and the roof pitch, and lay out stairs with the number of risers, tread depth and stringer length, checked against common building code limits. The siding calculator turns your walls and gables into cartons of vinyl or fiber cement planks, with starter strip, J-channel, corners and house wrap."
     }
   },
   "blog_intros": {

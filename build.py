@@ -564,6 +564,8 @@ MEASURE_TIPS = {
     "walls": [("\u2194", "Wall length", "add up every wall you will insulate"), ("\u2195", "Height", "floor to ceiling"), ("#", "Openings", "doors and windows to take off")],
     "retaining": [("\u2194", "Length", "along the face of the wall, end to end"), ("\u2195", "Height", "ground in front of the wall to the top of the block"), ("#", "Block", "face length, height and depth on the label")],
     "brick": [("\u2194", "Wall length", "add up every wall you will brick"), ("\u2195", "Height", "from the footing or ledge to the top"), ("#", "Openings", "doors and windows to take off")],
+    "siding": [("\u2194", "Around the house", "add up the length of every wall"), ("\u2195", "Wall height", "top of the foundation to the eaves"), ("\u25b3", "Gables", "width at the base and height to the peak")],
+    "countertop": [("\u2194", "Runs", "along the wall; corner runs from the front edge of the first"), ("\u2195", "Depth", "wall to the front edge, usually 25 1/2 in"), ("\u25ad", "Island", "length and depth, with any overhang")],
     "roof": [("\u2194", "Length and width", "outside walls of the house"), ("\u2194", "Overhang", "how far the roof sticks out past the walls"), ("\u2197", "Pitch", "inches of rise per 12 inches across")],
 }
 

@@ -618,6 +618,199 @@
     };
   }
 
+  /* ---------- Siding ---------- */
+  // CertainTeed siding estimating form: wall area = height to the eaves x width, with doors and
+  // windows left in; gables = (center height + 1 ft) x half the gable width; take off half of
+  // large uncovered areas (garage and sliding doors); add 10% to siding and accessories.
+  // Vinyl comes in 2-square cartons (e.g. CertainTeed Monogram double 4: 24 panels x 12 ft 6 in).
+  // HardiePlank lap siding: 12 ft planks, 100 / exposure (in) planks per square
+  // (James Hardie product catalog: 7 in exposure = 14.3 per square).
+  var SIDING_ACCESSORY_FT = 12;      // starter, J-channel and HardieTrim lengths
+  var CORNER_POST_FT = 10;           // vinyl outside and inside corner posts
+  var HOUSE_WRAP_ROLL_SQFT = 1350;   // 9 x 150 ft roll
+  function rakeLength(width, rise) { return 2 * Math.sqrt(Math.pow(width / 2, 2) + Math.pow(rise, 2)); }
+  function siding(i) {
+    var P = pos(i.perimeter), H = pos(i.wallHeight);
+    var gables = Math.max(0, Math.round(num(i.gables))), gw = pos(i.gableWidth), gh = pos(i.gableHeight);
+    var windows = Math.max(0, Math.round(num(i.windows))), doors = Math.max(0, Math.round(num(i.doors)));
+    var outside = Math.max(0, Math.round(num(i.outsideCorners))), inside = Math.max(0, Math.round(num(i.insideCorners)));
+    var waste = Math.max(0, num(i.wastePct, 10)) / 100;
+    var material = i.material === 'fiber' ? 'fiber' : 'vinyl';
+    var exposure = pos(i.exposure) || 7;
+    var wallArea = P * H;
+    var gableArea = gables && gw && gh ? gables * 0.5 * gw * (gh + 1) : 0;
+    var deduct = 0.5 * pos(i.largeOpenSqFt);
+    var area = Math.max(0, wallArea + gableArea - deduct);
+    var withWaste = area * (1 + waste);
+    var squares = withWaste / 100;
+    var pcsPerSq = 100 / exposure;
+    var cartons = material === 'vinyl' && squares > 0 ? ceil(squares / 2) : 0;
+    var planks = material === 'fiber' && squares > 0 ? ceil(squares * pcsPerSq) : 0;
+    var rake = gables && gw ? gables * rakeLength(gw, gh) : 0;
+    var eaves = Math.max(0, P - gables * gw);
+    var openingFt = windows * 16 + doors * 17;   // 3 x 5 ft window all round; 3 x 7 ft door on three sides
+    var ready = area > 0;
+    var pieces = function (ft) { return ready && ft > 0 ? ceil(ft * (1 + waste) / SIDING_ACCESSORY_FT) : 0; };
+    var out = {
+      material: material, exposure: exposure, pcsPerSq: pcsPerSq, waste: waste,
+      wallArea: wallArea, gableArea: gableArea, deduct: deduct, area: area, withWaste: withWaste, squares: squares,
+      cartons: cartons, planks: planks, rakeFt: rake, eavesFt: eaves, openingFt: openingFt,
+      wrapRolls: i.wrap && ready ? ceil((wallArea + gableArea) * 1.1 / HOUSE_WRAP_ROLL_SQFT) : 0
+    };
+    if (material === 'vinyl') {
+      out.starter = pieces(P);
+      out.jFt = openingFt + rake + eaves;
+      out.jChannel = pieces(out.jFt);
+      out.outsidePosts = ready ? outside * ceil(H / CORNER_POST_FT) : 0;
+      out.insidePosts = ready ? inside * ceil(H / CORNER_POST_FT) : 0;
+    } else {
+      var lengths = ceil(H / SIDING_ACCESSORY_FT);
+      out.cornerBoards = ready ? outside * 2 * lengths + inside * lengths : 0;
+      out.openingTrim = pieces(openingFt);
+      out.rakeTrim = pieces(rake + eaves);
+      // Starter strips are ripped from planks: about five 1 1/4 in strips per 8 1/4 in plank.
+      out.starterPlanks = ready && P > 0 ? ceil(ceil(P * (1 + waste) / 12) / 5) : 0;
+    }
+    return out;
+  }
+
+  /* ---------- Carpet ---------- */
+  // Broadloom carpet is cut off a roll (usually 12 ft wide, some 13 ft 6 in or 15 ft). CRI 105
+  // (residential installation standard) 5.3: allow at least 3 in along each wall for trimming;
+  // 5.1 and 5.2: keep seams to a minimum and lay every piece with the pile the same way.
+  // Each section is cut separately: strips run the long or short way, whichever uses less carpet.
+  var CARPET_TRIM_FT = 0.25;      // 3 in at each end of a cut
+  var TACK_STRIP_FT = 4;
+  function carpetCut(a, b, W) {
+    // Strips run along `a`; enough strips side by side to cover `b`.
+    var strips = ceil(b / W);
+    var length = ceil(a + 2 * CARPET_TRIM_FT);
+    return { strips: strips, length: length, linearFt: strips * length, seamFt: (strips - 1) * a, along: a, across: b };
+  }
+  function shapeDims(s) {
+    if (s.type === 'rect') return [pos(s.l), pos(s.w)];
+    if (s.type === 'tri') return [pos(s.b), pos(s.h)];
+    if (s.type === 'circle') return [pos(s.d), pos(s.d)];
+    return [0, 0];
+  }
+  function shapePerimeter(s) {
+    if (s.type === 'rect') return 2 * (pos(s.l) + pos(s.w));
+    if (s.type === 'tri') return pos(s.b) + pos(s.h) + Math.sqrt(pos(s.b) * pos(s.b) + pos(s.h) * pos(s.h));
+    if (s.type === 'circle') return Math.PI * pos(s.d);
+    return 0;
+  }
+  function carpet(i) {
+    var W = pos(i.rollWidth) || 12;
+    var shapes = i.shapes || [];
+    var floor = totalArea(shapes);
+    var cuts = [], linear = 0, seams = 0, perimeter = 0;
+    shapes.forEach(function (s) {
+      if (s.subtract) return;
+      var d = shapeDims(s);
+      if (!(d[0] > 0 && d[1] > 0)) return;
+      var x = carpetCut(d[0], d[1], W), y = carpetCut(d[1], d[0], W);
+      var best = y.linearFt < x.linearFt || (y.linearFt === x.linearFt && y.strips < x.strips) ? y : x;
+      cuts.push(best);
+      linear += best.linearFt; seams += best.seamFt; perimeter += shapePerimeter(s);
+    });
+    var sqFt = linear * W;
+    var doorways = Math.max(0, Math.round(num(i.doorways)));
+    var tackFt = Math.max(0, perimeter - doorways * 3);
+    return {
+      rollWidth: W, floorSqFt: floor, cuts: cuts, linearFt: linear, sqFt: sqFt, sqYd: sqFt / 9,
+      buySqYd: sqFt > 0 ? ceil(sqFt / 9) : 0,
+      wastePct: floor > 0 ? (sqFt / floor - 1) * 100 : 0,
+      seamFt: seams, seamTapeFt: seams > 0 ? ceil(seams * 1.1) : 0,
+      padSqYd: i.pad && floor > 0 && sqFt > 0 ? ceil(floor * 1.1 / 9) : 0,
+      tackFt: tackFt, tackStrips: sqFt > 0 && tackFt > 0 ? ceil(tackFt * 1.1 / TACK_STRIP_FT) : 0,
+      doorways: doorways
+    };
+  }
+
+  /* ---------- Countertops ---------- */
+  // Base cabinets are 24 in deep; a counter with a 1 1/2 in overhang is 25 1/2 in. Quartz slabs
+  // (Caesarstone): standard 120 x 56.5 in, jumbo 131.5 x 64.5 in. We keep 1 in clear of every slab
+  // edge for the saw, split pieces longer than a slab into equal lengths (a seam), then pack the
+  // pieces into strips along the slab and the strips across it, largest first. Laminate and
+  // butcher block come 25 in deep in 4, 6, 8, 10 and 12 ft lengths.
+  var SLABS = { standard: { l: 120, w: 56.5 }, jumbo: { l: 131.5, w: 64.5 } };
+  var SLAB_EDGE_IN = 1;
+  var STOCK_FT = [4, 6, 8, 10, 12];
+  var STOCK_DEPTH_IN = 25;
+  function firstFit(items, cap, size) {
+    var bins = [];
+    items.slice().sort(function (a, b) { return size(b) - size(a); }).forEach(function (it) {
+      var s = size(it), bin = null;
+      for (var k = 0; k < bins.length; k++) if (bins[k].used + s <= cap + 1e-9) { bin = bins[k]; break; }
+      if (!bin) { bin = { used: 0, items: [] }; bins.push(bin); }
+      bin.used += s; bin.items.push(it);
+    });
+    return bins;
+  }
+  function packSlabs(pieces, slab) {
+    var L = slab.l - 2 * SLAB_EDGE_IN, Wd = slab.w - 2 * SLAB_EDGE_IN;
+    var parts = [];
+    pieces.forEach(function (p) {
+      if (!(p.len > 0 && p.w > 0)) return;
+      var n = ceil(p.len / L), m = ceil(p.w / Wd);
+      for (var a = 0; a < n; a++) for (var b = 0; b < m; b++) parts.push({ len: p.len / n, w: p.w / m });
+    });
+    var byWidth = {};
+    parts.forEach(function (p) { var k = p.w.toFixed(3); (byWidth[k] = byWidth[k] || []).push(p); });
+    var strips = [];
+    Object.keys(byWidth).forEach(function (k) {
+      firstFit(byWidth[k], L, function (p) { return p.len; }).forEach(function () { strips.push({ w: parseFloat(k) }); });
+    });
+    return { parts: parts.length, strips: strips.length, slabs: firstFit(strips, Wd, function (s) { return s.w; }).length };
+  }
+  function stockPieces(lengthFt) {
+    // Smallest stock length that covers the run; longer runs are joined from 12 ft pieces.
+    var out = [];
+    var left = lengthFt;
+    while (left > 12 + 1e-9) { out.push(12); left -= 12; }
+    if (left > 1e-9) {
+      for (var k = 0; k < STOCK_FT.length; k++) if (STOCK_FT[k] >= left - 1e-9) { out.push(STOCK_FT[k]); break; }
+    }
+    return out;
+  }
+  function countertop(i) {
+    var runs = [pos(i.run1), pos(i.run2), pos(i.run3)].filter(function (r) { return r > 0; });
+    var depth = pos(i.depthIn) || 25.5;
+    var isl = pos(i.islandL), islD = isl > 0 ? (pos(i.islandDepthIn) || 36) : 0;
+    var splash = pos(i.splashIn);
+    var runFt = runs.reduce(function (t, r) { return t + r; }, 0);
+    var counterSqFt = runFt * depth / 12, islandSqFt = isl * islD / 12, splashSqFt = runFt * splash / 12;
+    var material = ['quartz', 'granite', 'laminate', 'butcher'].indexOf(i.material) >= 0 ? i.material : 'quartz';
+    var out = {
+      material: material, runs: runs, runFt: runFt, depthIn: depth, islandL: isl, islandDepthIn: islD,
+      counterSqFt: counterSqFt, islandSqFt: islandSqFt, splashSqFt: splashSqFt,
+      topSqFt: counterSqFt + islandSqFt, sqFt: counterSqFt + islandSqFt + splashSqFt,
+      edgeFt: runFt + (isl > 0 ? 2 * isl + 2 * islD / 12 : 0)
+    };
+    if (material === 'quartz' || material === 'granite') {
+      var slab = SLABS[i.slab] || SLABS.standard;
+      var pieces = runs.map(function (r) { return { len: r * 12, w: depth }; });
+      if (isl > 0) pieces.push({ len: isl * 12, w: islD });
+      if (splash > 0) runs.forEach(function (r) { pieces.push({ len: r * 12, w: splash }); });
+      var pk = packSlabs(pieces, slab);
+      out.slabSize = slab; out.slabSqFt = slab.l * slab.w / 144;
+      out.slabs = out.sqFt > 0 ? pk.slabs : 0;
+      out.seams = Math.max(0, pk.parts - pieces.length);
+    } else {
+      var stock = [];
+      runs.forEach(function (r) { stock = stock.concat(stockPieces(r)); });
+      var across = isl > 0 ? ceil(islD / STOCK_DEPTH_IN) : 0;
+      for (var a = 0; a < across; a++) stock = stock.concat(stockPieces(isl));
+      var counts = {};
+      stock.forEach(function (s) { counts[s] = (counts[s] || 0) + 1; });
+      out.stock = STOCK_FT.slice().reverse().filter(function (s) { return counts[s]; }).map(function (s) { return { ft: s, count: counts[s] }; });
+      out.pieces = stock.length;
+      out.stockFt = stock.reduce(function (t, s) { return t + s; }, 0);
+      out.islandAcross = across;
+    }
+    return out;
+  }
+
   /* ---------- Reading a pasted measurement ---------- */
   // Turns text like 4' 3", 4 ft 3 in, 51 in, 4.25 ft, 1.3 m or 130 cm
   // (as copied from Apple's Measure app or typed) into feet + inches.
@@ -660,6 +853,7 @@
     baseboard: baseboard, grout: grout, groutCuInPerSqFt: groutCuInPerSqFt, GROUT: GROUT,
     driveway: driveway, DENSE_TONS_PER_YD: DENSE_TONS_PER_YD, CLEAN_STONE_TONS_PER_YD: CLEAN_STONE_TONS_PER_YD,
     retainingWall: retainingWall, brick: brick, BRICK_SIZES: BRICK_SIZES, MORTAR_BAG_CU_FT: MORTAR_BAG_CU_FT,
+    siding: siding, carpet: carpet, countertop: countertop, packSlabs: packSlabs, stockPieces: stockPieces, SLABS: SLABS,
     constants: { DOOR_SQFT: DOOR_SQFT, WINDOW_SQFT: WINDOW_SQFT, TAPE_ROLL_FT: TAPE_ROLL_FT, GROUT_LB_PER_CU_IN: GROUT_LB_PER_CU_IN }
   };
 });

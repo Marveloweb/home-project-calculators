@@ -1,0 +1,37 @@
+{
+  "tool": "countertop",
+  "category": "floors",
+  "short": "Countertop calculator",
+  "what": "Square feet and slabs of quartz or granite, or laminate and butcher block lengths",
+  "title": "Countertop Calculator: Square Feet and Slabs | Calcupine",
+  "description": "Free countertop calculator: square feet of counters, island and backsplash, how many quartz or granite slabs, or which laminate and butcher block lengths to buy.",
+  "h1": "Countertop calculator",
+  "lede": "Enter your counter runs, island and backsplash height. Get the square feet a fabricator will price, an estimate of the slabs it takes, or the stock lengths of laminate or butcher block to buy.",
+  "related": [
+    "tile-calculator",
+    "flooring-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate countertop square footage?",
+      "a": "Multiply each run's length in inches by its depth in inches and divide by 144. A 10 ft run at the standard 25 1/2 in depth is 120 x 25.5 / 144 = 21.25 sq ft. Add the island and the backsplash the same way."
+    },
+    {
+      "q": "How deep is a standard kitchen countertop?",
+      "a": "About 25 to 25 1/2 inches: base cabinets are 24 in deep and the top overhangs the doors by 1 to 1 1/2 in. Laminate and butcher block are sold 25 in deep."
+    },
+    {
+      "q": "How big is a slab of quartz?",
+      "a": "Caesarstone lists standard slabs of 120 x 56.5 in (about 47 sq ft) and jumbo slabs of 131.5 x 64.5 in (about 59 sq ft). Granite slabs vary from quarry to quarry, so check with your stone yard."
+    },
+    {
+      "q": "How many slabs of quartz do I need for my kitchen?",
+      "a": "Lay the pieces out on the slab. Two 25 1/2 in counter pieces fit across a standard slab, but a 36 in island and a counter piece only fit across a jumbo one. The L-shaped kitchen with a 6 ft island in our worked example takes 3 standard slabs or 2 jumbo ones; the calculator works it out for your runs."
+    },
+    {
+      "q": "How much overhang does an island need for seating?",
+      "a": "The NKBA recommends 24 in of width per seat, with 15 in of knee space at a 36 in counter, 12 in at a 42 in bar and 18 in at a 30 in table-height counter."
+    }
+  ]
+}

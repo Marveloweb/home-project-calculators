@@ -1,0 +1,65 @@
+<div class="group">
+  <!-- diagram: countertop -->
+  <div class="row">
+    <div class="field ftin"><span>Run 1</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="run1_ft" value="10"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="run1_in" value=""><span class="unit">in</span></label>
+      </div>
+      <span class="hint">Along the wall, to the end</span>
+    </div>
+    <div class="field ftin"><span>Run 2</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="run2_ft" value="8"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="run2_in" value=""><span class="unit">in</span></label>
+      </div>
+      <span class="hint">From the front edge of run 1</span>
+    </div>
+    <div class="field ftin"><span>Run 3</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="run3_ft" value=""><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="run3_in" value=""><span class="unit">in</span></label>
+      </div>
+      <span class="hint">Leave empty if none</span>
+    </div>
+  </div>
+  <div class="row">
+    <label class="field"><span>Counter depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="depthIn" value="25.5"><span class="unit">in</span></span><span class="hint">Wall to front edge</span></label>
+    <label class="field"><span>Backsplash height</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="splashIn" value="4"><span class="unit">in</span></span><span class="hint">0 for none</span></label>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Island</p>
+  <div class="row">
+    <div class="field ftin"><span>Island length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="islandL_ft" value="6"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="islandL_in" value=""><span class="unit">in</span></label>
+      </div>
+      <span class="hint">Leave empty if none</span>
+    </div>
+    <label class="field"><span>Island depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="islandDepthIn" value="36"><span class="unit">in</span></span><span class="hint">Including any seating overhang</span></label>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Material</p>
+  <fieldset class="choices">
+    <legend>Countertop</legend>
+    <label><input type="radio" name="material" value="quartz" checked><span>Quartz</span></label>
+    <label><input type="radio" name="material" value="granite"><span>Granite</span></label>
+    <label><input type="radio" name="material" value="laminate"><span>Laminate</span></label>
+    <label><input type="radio" name="material" value="butcher"><span>Butcher block</span></label>
+  </fieldset>
+  <div data-mat="stone">
+    <label class="field"><span>Slab size</span>
+      <select name="slab">
+        <option value="standard" selected>Standard, 120 x 56.5 in</option>
+        <option value="jumbo">Jumbo, 131.5 x 64.5 in</option>
+      </select>
+      <span class="hint">Ask your stone yard</span>
+    </label>
+    <label class="check"><input type="checkbox" name="sink" checked> <span>Undermount sink cutout</span></label>
+  </div>
+</div>

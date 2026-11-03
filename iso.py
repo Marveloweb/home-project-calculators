@@ -100,6 +100,7 @@ COLORS = {
     "stairs": "#84cc16", "lawn": "#10b981",
     "insulation": "#f58fb0", "baseboard": "#8b5a3c", "grout": "#64748b",
     "driveway": "#a8a29e", "retaining": "#b4a48c", "brick": "#c2410c",
+    "siding": "#5b8fb9", "carpet": "#9d6bce", "countertop": "#d6d3d1",
 }
 
 # Per-calculator page colors: accent, second gradient color, deep edge, soft tint.
@@ -126,6 +127,9 @@ ACCENTS = {
     "driveway":  ("#57534e", "#d6a35c", "#292524", "#f1eee9"),
     "retaining": ("#7c6a4f", "#a3b86c", "#4a3f2e", "#f2eee4"),
     "brick":     ("#c2410c", "#f59e0b", "#7c2d12", "#fdeee4"),
+    "siding":    ("#2f6f9f", "#7cc4e4", "#1d4a6b", "#e4f1f9"),
+    "carpet":    ("#8b4fc4", "#e58fb8", "#5b2d86", "#f3e9fb"),
+    "countertop": ("#57534e", "#c9a77c", "#292524", "#f3f1ee"),
 }
 
 
@@ -276,6 +280,23 @@ def tool_icon(kind, size=96):
                 sc.box(x0, 1.8, 0.15 + row * 0.62, w, 1.4, 0.55, shade(c, 0.08 if (row + k) % 2 else -0.06), depth=1 + row + k * 0.01)
         sc.box(1.6, 2.1, 3.25, 2.4, 0.9, 0.08, "#cfd6e4", depth=8)
         sc.box(3.9, 2.4, 3.25, 1.4, 0.3, 0.3, COLORS["tape"], depth=9)
+    elif kind == "siding":
+        # A corner of lapped siding boards with a white corner post
+        for row in range(6):
+            z = row * 0.72
+            sc.box(0.3 - row * 0.03, 2.0, z, 5.2, 1.0 + row * 0.03, 0.78, shade(c, 0.1 if row % 2 else -0.04), depth=1 + row)
+        sc.box(5.5, 2.0, 0, 0.5, 1.2, 4.4, "#f4f6fb", depth=9)
+    elif kind == "carpet":
+        # A flat piece of carpet with the rest of the roll standing on it
+        sc.box(0.2, 0.6, 0, 5.2, 4.4, 0.35, c, depth=0)
+        sc.box(0.2, 0.6, 0.35, 5.2, 0.3, 0.06, shade(c, -0.2), depth=0.6)
+        sc.cylinder(3.9, 3.6, 0.35, 1.2, 3.8, shade(c, 0.08), lid=shade(c, 0.3), depth=5)
+    elif kind == "countertop":
+        # A base cabinet with a stone top, a sink cut-out and a backsplash
+        sc.box(0.4, 1.4, 0, 4.8, 2.6, 3.0, "#8b6a4f", depth=0)
+        sc.box(0.2, 1.2, 3.0, 5.2, 3.0, 0.45, c, depth=1)
+        sc.box(1.4, 1.9, 3.3, 1.8, 1.4, 0.16, shade(c, -0.35), depth=2)
+        sc.box(0.2, 4.0, 3.45, 5.2, 0.2, 0.9, shade(c, 0.12), depth=3)
     return sc.svg(size, size, cls="iso-icon")
 
 

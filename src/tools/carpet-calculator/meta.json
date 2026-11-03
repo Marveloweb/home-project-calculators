@@ -1,0 +1,37 @@
+{
+  "tool": "carpet",
+  "category": "floors",
+  "short": "Carpet calculator",
+  "what": "Square feet and yards of carpet off the roll, with pad and tack strip",
+  "title": "Carpet Calculator: Square Feet, Yards and Seams | Calcupine",
+  "description": "Free carpet calculator: how much carpet to buy off a 12, 13.5 or 15 ft roll, with the cut and seams worked out, plus square yards of pad and tack strip.",
+  "h1": "Carpet calculator",
+  "lede": "Enter your room and the roll width. Get the carpet to order with the pieces and seams worked out the way installers cut it, plus pad, tack strip and seam tape.",
+  "related": [
+    "flooring-calculator",
+    "square-footage-calculator",
+    "baseboard-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How much carpet do I need for a 12 by 12 room?",
+      "a": "A piece 12 ft wide and 13 ft long off a 12 ft roll: 156 sq ft, or 17.3 sq yd. The extra foot of length is the 3 in trim allowance at each wall, rounded up to a whole foot."
+    },
+    {
+      "q": "Why do I need more carpet than my room's square footage?",
+      "a": "Carpet is cut from a roll of fixed width, usually 12 ft. You pay for the full width of every strip, even the part trimmed off, plus at least 3 in along each wall for trimming, as the Carpet and Rug Institute's installation standard requires."
+    },
+    {
+      "q": "How many square feet are in a square yard of carpet?",
+      "a": "9 square feet. Divide square feet by 9 to get square yards."
+    },
+    {
+      "q": "Can leftover carpet be turned sideways to fill a gap?",
+      "a": "Not in the same room. The CRI installation standard requires every piece of the same carpet to have the pile running the same way, or the seam shows as a change in color. Leftovers can go in a closet or another room."
+    },
+    {
+      "q": "How much carpet pad do I need?",
+      "a": "The floor area plus about 10%, in square yards. Pad seams should cross the carpet seams at right angles or sit at least 6 in to one side, according to CRI 105."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<div class="group">
+  <p class="group-title">Room</p>
+  <div data-area-builder></div>
+  <p class="hint">Add each room or part of an L-shaped room as its own section; each is cut separately.</p>
+</div>
+
+<div class="group">
+  <p class="group-title">Carpet</p>
+  <div class="row">
+    <label class="field"><span>Roll width</span>
+      <select name="rollWidth">
+        <option value="12" selected>12 ft (most carpet)</option>
+        <option value="13.5">13 ft 6 in</option>
+        <option value="15">15 ft</option>
+      </select>
+      <span class="hint">On the sample</span>
+    </label>
+    <label class="field"><span>Price per square foot</span>
+      <span class="with-unit"><span class="unit">$</span><input type="number" inputmode="decimal" min="0" step="0.01" name="pricePerSqFt" value="3.00"></span>
+      <span class="hint">Divide a square yard price by 9</span>
+    </label>
+  </div>
+  <div class="row">
+    <label class="field"><span>Doorways</span><input type="number" inputmode="numeric" min="0" step="1" name="doorways" value="1"><span class="hint">No tack strip across them</span></label>
+  </div>
+  <label class="check"><input type="checkbox" name="pad" checked> <span>Add carpet pad</span></label>
+</div>

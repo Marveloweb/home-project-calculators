@@ -12,8 +12,10 @@
 
 ## Floors
 - [Flooring calculator](https://calcupine.com/flooring-calculator/): Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim
+- [Carpet calculator](https://calcupine.com/carpet-calculator/): Square feet and yards of carpet off the roll, with pad and tack strip
 - [Tile calculator](https://calcupine.com/tile-calculator/): Tiles, boxes, thinset and grout for floors, walls and backsplashes
 - [Grout calculator](https://calcupine.com/grout-calculator/): Pounds and bags of sanded, non-sanded or pre-mixed grout
+- [Countertop calculator](https://calcupine.com/countertop-calculator/): Square feet and slabs of quartz or granite, or laminate and butcher block lengths
 - [Square footage calculator](https://calcupine.com/square-footage-calculator/): Area of any room or yard in sq ft, sq yd and m²
 
 ## Concrete, pavers and fill
@@ -31,6 +33,7 @@
 
 ## Roofs and stairs
 - [Roofing calculator](https://calcupine.com/roofing-calculator/): Roof area, squares, shingle bundles and underlayment
+- [Siding calculator](https://calcupine.com/siding-calculator/): Squares of vinyl or fiber cement siding, with trim and house wrap
 - [Stairs calculator](https://calcupine.com/stairs-calculator/): Risers, treads and stringer length that meet code
 
 ## About

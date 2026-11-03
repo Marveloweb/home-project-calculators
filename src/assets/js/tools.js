@@ -797,5 +797,134 @@
     }
   };
 
+  /* ---------- Siding ---------- */
+  T.siding = {
+    prepare: function (form, v) {
+      showFor(form, 'data-mat', v.material === 'fiber' ? 'fiber' : 'vinyl');
+    },
+    calc: function (v, F) {
+      var r = F.siding(v), ready = r.area > 0;
+      var items = [], notes = [];
+      var pct = Math.round(r.waste * 100);
+      if (r.material === 'vinyl') {
+        items.push({ key: 'siding-vinyl', name: 'Vinyl siding, 2-square carton', qty: r.cartons, unit: plural(r.cartons, 'carton', 'cartons'), unitSingle: 'carton', price: 260,
+          note: fmt(r.squares, 1) + ' squares with ' + pct + '% extra' });
+        items.push({ key: 'starter', name: 'Starter strip, 12 ft', qty: r.starter, unit: 'pieces', unitSingle: 'piece', price: 9 });
+        items.push({ key: 'jchannel', name: 'J-channel, 12 ft', qty: r.jChannel, unit: 'pieces', unitSingle: 'piece', price: 9,
+          note: 'Around openings, under eaves and up the gables' });
+        items.push({ key: 'outside', name: 'Outside corner post, 10 ft', qty: r.outsidePosts, unit: 'posts', unitSingle: 'post', price: 30 });
+        items.push({ key: 'inside', name: 'Inside corner post, 10 ft', qty: r.insidePosts, unit: 'posts', unitSingle: 'post', price: 20 });
+      } else {
+        items.push({ key: 'siding-fiber', name: 'Fiber cement lap siding, 12 ft plank (' + fmt(r.exposure, r.exposure % 1 ? 2 : 0) + ' in exposure)', qty: r.planks, unit: 'planks', unitSingle: 'plank', price: 14,
+          note: fmt(r.pcsPerSq, 1) + ' per square, ' + fmt(r.squares, 1) + ' squares with ' + pct + '% extra' });
+        items.push({ key: 'starter', name: 'Extra planks to rip into starter strips', qty: r.starterPlanks, unit: 'planks', unitSingle: 'plank', price: 14 });
+        items.push({ key: 'corner', name: 'Fiber cement trim board for corners, 12 ft', qty: r.cornerBoards, unit: 'boards', unitSingle: 'board', price: 30 });
+        items.push({ key: 'trim', name: 'Fiber cement trim board for windows and doors, 12 ft', qty: r.openingTrim, unit: 'boards', unitSingle: 'board', price: 30 });
+        items.push({ key: 'rake', name: 'Fiber cement trim board for eaves and rakes, 12 ft', qty: r.rakeTrim, unit: 'boards', unitSingle: 'board', price: 30 });
+      }
+      if (r.wrapRolls) items.push({ key: 'wrap', name: 'House wrap, 9 x 150 ft roll', qty: r.wrapRolls, unit: plural(r.wrapRolls, 'roll', 'rolls'), unitSingle: 'roll', price: 190, note: 'Laps of 6 in or more' });
+      if (ready) {
+        notes.push('Siding area: ' + fmt(r.wallArea) + ' sq ft of walls' + (r.gableArea ? ' + ' + fmt(r.gableArea) + ' sq ft of gables' : '') + (r.deduct ? ' − ' + fmt(r.deduct) + ' sq ft for half the large openings' : '') + ' = ' + fmt(r.area) + ' sq ft. Doors and windows are left in: the offcuts around them are the reason.');
+        if (r.material === 'vinyl') {
+          notes.push('Leave 1/4 in between panels and every corner post or channel (3/8 in below 40°F), and center nails in the slots without driving them tight, so the vinyl can move.');
+          notes.push('Nail panels no more than 16 in apart, at least 3/4 in into the framing, with nails that have a 5/16 in head.');
+        } else {
+          notes.push('Fiber cement planks are heavy and cutting them makes silica dust. Score-and-snap or use a dust-collecting saw, outdoors, and follow the maker\'s nailing chart.');
+          notes.push('Keep the bottom course at least 6 in above the ground, and follow the maker\'s clearances above roofs, decks and paths.');
+        }
+        notes.push('Count every outside corner of the house, including the corners of bump-outs and chimneys, and add 10% to the trim if your house has many.');
+      }
+      return {
+        ready: ready && (r.cartons > 0 || r.planks > 0),
+        headline: { value: ready ? fmt(r.material === 'vinyl' ? r.cartons : r.planks) : '0',
+          unit: ready ? (r.material === 'vinyl' ? plural(r.cartons, 'carton of vinyl siding', 'cartons of vinyl siding') : 'fiber cement planks') : 'Enter your walls',
+          sub: ready ? fmt(r.squares, 1) + ' squares (' + fmt(r.withWaste) + ' sq ft) for ' + fmt(r.area) + ' sq ft of wall' : '' },
+        items: items, notes: notes
+      };
+    }
+  };
+
+  /* ---------- Carpet ---------- */
+  T.carpet = {
+    defaultShapes: [{ type: 'rect', l: 15, w: 12 }],
+    calc: function (v, F) {
+      var r = F.carpet(v), ready = r.sqFt > 0;
+      var W = r.rollWidth, Wtxt = W % 1 ? fmt(Math.floor(W)) + ' ft ' + fmt((W % 1) * 12) + ' in' : fmt(W) + ' ft';
+      var perSqFt = F.num(v.pricePerSqFt, 3);
+      var items = [
+        { key: 'carpet', name: 'Carpet, ' + Wtxt + ' wide roll', qty: r.sqFt, unit: 'sq ft', unitSingle: 'sq ft', price: perSqFt,
+          note: fmt(r.linearFt) + ' linear ft, ' + fmt(r.sqYd, 1) + ' sq yd' },
+        { key: 'pad', name: 'Carpet pad (cushion)', qty: r.padSqYd, unit: 'sq yd', unitSingle: 'sq yd', price: 5, note: 'Floor area plus 10%' },
+        { key: 'tack', name: 'Tack strip, 4 ft', qty: r.tackStrips, unit: 'strips', unitSingle: 'strip', price: 1, note: fmt(r.tackFt) + ' ft of wall, doorways left out' },
+        { key: 'seam', name: 'Hot-melt seam tape', qty: r.seamTapeFt, unit: 'ft', unitSingle: 'ft', price: 0.6 },
+        { key: 'transition', name: 'Carpet transition strip for doorways', qty: ready ? r.doorways : 0, unit: 'strips', unitSingle: 'strip', price: 15 }
+      ];
+      var notes = [];
+      if (ready) {
+        r.cuts.forEach(function (c, k) {
+          notes.push((r.cuts.length > 1 ? 'Section ' + (k + 1) + ': ' : '') + c.strips + ' ' + plural(c.strips, 'piece', 'pieces') + ' ' + Wtxt + ' wide by ' + fmt(c.length) + ' ft, running along the ' + fmt(c.along, 1) + ' ft side' + (c.strips > 1 ? ', with ' + fmt(c.seamFt, 1) + ' ft of seam' : ', no seam') + '.');
+        });
+        notes.push('That is ' + fmt(r.sqFt) + ' sq ft of carpet for ' + fmt(r.floorSqFt, 1) + ' sq ft of floor (' + fmt(r.wastePct) + '% more). Carpet comes off a ' + Wtxt + ' roll, so the leftover is the part of the last strip you trim away, plus 3 in at each wall.');
+        notes.push('Every piece runs the same way so the pile matches. Ask the installer to keep seams out of doorways and busy walkways.');
+        if (r.seamFt > 0) notes.push('A wider roll may save a seam: try 13 ft 6 in or 15 ft if your carpet comes in it.');
+        notes.push('Stores often price carpet per square yard: ' + fmt(r.buySqYd) + ' sq yd.');
+      }
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.sqFt) : '0', unit: ready ? 'sq ft of carpet' : 'Enter your room',
+          sub: ready ? fmt(r.linearFt) + ' linear ft off a ' + Wtxt + ' roll, ' + fmt(r.buySqYd) + ' sq yd' : '' },
+        items: items, notes: notes
+      };
+    }
+  };
+
+  /* ---------- Countertops ---------- */
+  var TOP_NAME = {
+    quartz: 'Quartz countertop, fabricated and installed', granite: 'Granite countertop, fabricated and installed',
+    laminate: 'Laminate countertop, 25 in deep', butcher: 'Butcher block countertop, 25 in deep'
+  };
+  var TOP_PRICE = { quartz: 75, granite: 60, laminate: 22, butcher: 40 };
+  T.countertop = {
+    prepare: function (form, v) {
+      showFor(form, 'data-mat', v.material === 'laminate' || v.material === 'butcher' ? 'stock' : 'stone');
+    },
+    calc: function (v, F) {
+      var r = F.countertop(v), stone = r.material === 'quartz' || r.material === 'granite';
+      var ready = r.topSqFt > 0;
+      var items = [], notes = [], headline;
+      if (stone) {
+        var sqft = Math.ceil(r.sqFt - 1e-9);
+        items.push({ key: 'top-' + r.material, name: TOP_NAME[r.material], qty: ready ? sqft : 0, unit: 'sq ft', unitSingle: 'sq ft', price: TOP_PRICE[r.material],
+          note: 'About ' + r.slabs + ' ' + plural(r.slabs, 'slab', 'slabs') + ' of ' + fmt(r.slabSize.l, 1).replace(/\.0$/, '') + ' x ' + fmt(r.slabSize.w, 1).replace(/\.0$/, '') + ' in' });
+        items.push({ key: 'sink', name: 'Undermount sink cutout', qty: ready && v.sink ? 1 : 0, unit: 'cutout', price: 250 });
+        headline = { value: ready ? fmt(r.sqFt, 1) : '0', unit: ready ? 'sq ft of ' + r.material : 'Enter your counter runs',
+          sub: ready ? 'About ' + r.slabs + ' ' + plural(r.slabs, 'slab', 'slabs') + ' (' + fmt(r.slabSqFt, 1) + ' sq ft each)' + (r.seams ? ', ' + r.seams + ' ' + plural(r.seams, 'seam', 'seams') : '') : '' };
+        if (ready) {
+          notes.push('Counters ' + fmt(r.counterSqFt, 1) + ' sq ft' + (r.islandSqFt ? ' + island ' + fmt(r.islandSqFt, 1) : '') + (r.splashSqFt ? ' + backsplash ' + fmt(r.splashSqFt, 1) : '') + ' = ' + fmt(r.sqFt, 1) + ' sq ft. Sink and cooktop holes are not taken off: the stone is bought and cut whole.');
+          notes.push('Slab count is a layout estimate: pieces packed side by side across each slab, 1 in clear of the edges. Veined stone matched across seams, or a fabricator\'s own layout, can take another slab.');
+          if (r.seams) notes.push(r.seams + ' ' + plural(r.seams, 'piece is', 'pieces are') + ' longer than a slab, so ' + plural(r.seams, 'it gets', 'they get') + ' a seam. A jumbo slab may avoid it.');
+          notes.push('Most fabricators price quartz and granite per square foot installed, with edges, sink cutouts and removal of the old tops extra. Get the final number from their template.');
+        }
+      } else {
+        (r.stock || []).forEach(function (s) {
+          items.push({ key: 'stock-' + s.ft, name: TOP_NAME[r.material] + ', ' + s.ft + ' ft', qty: s.count, unit: 'pieces', unitSingle: 'piece', price: TOP_PRICE[r.material] * s.ft });
+        });
+        if (r.material === 'laminate') items.push({ key: 'endcap', name: 'End cap kit', qty: ready ? 1 : 0, unit: 'kit', price: 15 });
+        else items.push({ key: 'oil', name: 'Food-safe mineral oil or butcher block finish', qty: ready ? 1 : 0, unit: 'bottle', price: 15 });
+        items.push({ key: 'caulk', name: 'Silicone caulk, 10 oz tube', qty: ready ? 1 : 0, unit: 'tube', price: 8 });
+        headline = { value: ready ? fmt(r.pieces) : '0', unit: ready ? plural(r.pieces, 'countertop piece', 'countertop pieces') : 'Enter your counter runs',
+          sub: ready ? fmt(r.stockFt) + ' ft of 25 in deep stock for ' + fmt(r.topSqFt, 1) + ' sq ft of counter' : '' };
+        if (ready) {
+          notes.push('Each run gets the shortest stock length that covers it; runs over 12 ft are joined from more than one piece.');
+          if (r.material === 'laminate') notes.push('Post-formed laminate tops have the 4 in backsplash built in. An L-shaped run needs a mitered corner: buy pre-mitered pieces or have the store cut them.');
+          else notes.push('Seal butcher block on all sides, including the underside and cut ends, before it goes on the cabinets, and fix it with slotted brackets so the wood can move.');
+          if (r.islandAcross > 1) notes.push('Your island is ' + fmt(r.islandDepthIn, 1) + ' in deep, more than one 25 in piece, so it is counted as ' + r.islandAcross + ' pieces side by side. Wide island blanks (36 to 42 in) are sold too and save a seam.');
+        }
+      }
+      if (ready && r.islandL) notes.push('For seating, allow 24 in of island per stool and a 12 to 15 in overhang (12 in at bar height, 15 in at counter height), per the NKBA guidelines.');
+      return { ready: ready, headline: headline, items: items, notes: notes };
+    }
+  };
+
   window.PMTools = T;
 })();
