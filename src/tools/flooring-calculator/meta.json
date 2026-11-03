@@ -8,7 +8,8 @@
   "lede": "Enter your room, the square feet per box, and your layout to see how many boxes to buy, with underlayment and trim. Works for laminate, vinyl plank and hardwood.",
   "related": [
     "tile-calculator",
-    "paint-calculator"
+    "paint-calculator",
+    "carpet-calculator"
   ],
   "faq": [
     {

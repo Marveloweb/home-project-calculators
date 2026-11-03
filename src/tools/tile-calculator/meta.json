@@ -8,7 +8,8 @@
   "lede": "Enter your floor or wall area, tile size and layout to get the number of tiles and boxes, plus thinset and grout. Add sections for L-shaped rooms and subtract areas like a vanity.",
   "related": [
     "flooring-calculator",
-    "paint-calculator"
+    "paint-calculator",
+    "countertop-calculator"
   ],
   "faq": [
     {
