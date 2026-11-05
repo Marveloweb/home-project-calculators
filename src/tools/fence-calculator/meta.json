@@ -28,6 +28,18 @@
     {
       "q": "How many pickets do I need for 100 feet?",
       "a": "With 5.5 inch pickets and a 1/2 inch gap, each picket covers 6 inches, so 100 feet (1,200 in) needs 200 pickets. A privacy fence with no gaps needs about 219."
+    },
+    {
+      "q": "Do I count gate posts separately?",
+      "a": "Measure the fence run minus the gate opening, then add the gate's own posts. If the gate sits between two full-length sections, it can share the posts on either side, which saves posts. Decks.com notes this can reduce the number you buy. Follow your gate hardware maker's post requirements."
+    },
+    {
+      "q": "Is post spacing the same for vinyl and chain-link?",
+      "a": "Not always. Decks.com lists wood and composite at 6 to 8 feet, vinyl at 8 to 10 feet and chain-link at 10 to 12 feet, while Angi gives 6 to 8 feet for vinyl and 4 to 10 feet for chain-link. Because published ranges differ, use your manufacturer's spacing and enter it in the calculator."
+    },
+    {
+      "q": "How do I figure posts for a sloped yard?",
+      "a": "Measure the spacing horizontally, not along the ground, and plan for rails that run longer than the post spacing. Decks.com notes that rails on a 20 degree slope can run close to 8 feet 6 inches. Check that your rail stock is long enough."
     }
   ]
 }

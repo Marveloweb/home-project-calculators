@@ -32,6 +32,18 @@
     {
       "q": "How many stringers do I need?",
       "a": "It depends on the tread material and stair width. A common approach is stringers no more than 16 inches apart, so a 36 inch wide stair needs 4. Check your tread maker's and local code's requirements."
+    },
+    {
+      "q": "Can the steps in one flight be different heights?",
+      "a": "Only slightly. The IRC allows no more than 3/8 inch difference between the tallest and shortest riser in a flight, and the same for the deepest and shallowest tread. Uneven steps are a common trip hazard, so cut every riser to the calculated height."
+    },
+    {
+      "q": "Do I need a nosing on my treads?",
+      "a": "Treads under 11 inches deep need a nosing projecting 3/4 to 1 1/4 inches under the IRC. A nosing is not required once the tread is 11 inches or deeper. Check with your local building department."
+    },
+    {
+      "q": "When is a handrail required on stairs?",
+      "a": "Under the IRC, stairs with four or more risers need a handrail, according to Viewrail's code summary. Local codes may differ, so confirm with your building department."
     }
   ]
 }
