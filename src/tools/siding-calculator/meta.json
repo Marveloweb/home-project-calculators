@@ -32,6 +32,18 @@
     {
       "q": "How do I measure the gables?",
       "a": "Measure the width of the gable at its base and the height from the base to the peak. Its area is half the width times the height plus 1 ft, which the calculator works out for you."
+    },
+    {
+      "q": "How many starter strips, J-channel and corner posts do I need per square?",
+      "a": "Ply Gem's rule of thumb is 0.8 pieces of starter strip, 2 pieces of J-channel, 0.2 outside corner posts and 0.1 inside corner posts per square. The calculator counts from your actual perimeter, openings and corners, so use these figures only as a cross-check."
+    },
+    {
+      "q": "Do I need to round up to full cartons of vinyl siding?",
+      "a": "Yes. Vinyl is sold by the carton, 2 squares each, so you cannot buy part of one. The leftover after rounding up is useful: LP notes that extra siding covers later repairs."
+    },
+    {
+      "q": "What else do I need to buy besides siding and trim?",
+      "a": "Nails or screws, caulk or sealant, flashing and house wrap are separate items. Hover and LP both tell you to add these miscellaneous items to your list. The calculator counts wrap but not fasteners, caulk or flashing."
     }
   ]
 }

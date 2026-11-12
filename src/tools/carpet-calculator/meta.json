@@ -32,6 +32,18 @@
     {
       "q": "How much carpet pad do I need?",
       "a": "The floor area plus about 10%, in square yards. Pad seams should cross the carpet seams at right angles or sit at least 6 in to one side, according to CRI 105."
+    },
+    {
+      "q": "How much carpet do I need for stairs?",
+      "a": "For each step add the tread depth, the riser height and 1 to 2 in for the nose, multiply by the number of steps, divide by 12 and round up to whole feet, then multiply by the stair width rounded up to a whole foot (HomeAdvisor's method). Thirteen steps with a 7 in rise, 7 in run and 2 in nose is 16 in each: 208 in, or 18 ft. On 4 ft wide stairs that is 72 sq ft, plus any landing."
+    },
+    {
+      "q": "Can a 12 ft roll cover a room wider than 12 ft without a seam?",
+      "a": "Only if the room's other side is 12 ft or less, since the carpet can then run the long way in one strip. If both sides are over 12 ft, a 12 ft roll needs a seam. A 15 ft roll avoids the seam in rooms up to 15 ft on one side, though the wider roll may waste more carpet."
+    },
+    {
+      "q": "How much extra carpet should I buy for a patterned carpet?",
+      "a": "Flooring retail guides suggest about 10% to 15% extra, because the pattern has to line up across seams. The calculator does not include pattern repeat, so ask the store for the repeat size and add its allowance to the total."
     }
   ]
 }
